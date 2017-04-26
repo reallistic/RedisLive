@@ -281,7 +281,7 @@ class RedisMonitor(object):
         self.active = False
 
 
-if __name__ == '__main__':
+def main():
     parser = argparse.ArgumentParser(description='Monitor redis.')
     parser.add_argument('--duration',
                         type=int,
@@ -295,3 +295,6 @@ if __name__ == '__main__':
     duration = args.duration
     monitor = RedisMonitor()
     monitor.run(duration)
+
+if __name__ == '__main__':
+    main()
