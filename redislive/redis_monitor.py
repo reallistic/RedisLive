@@ -101,6 +101,7 @@ class MonitorThread(threading.Thread):
         commands = monitor.monitor()
 
         for command in commands:
+            print command
             try:
                 parts = command.split(" ")
 
@@ -233,9 +234,10 @@ class InfoThread(threading.Thread):
 
 class RedisMonitor(object):
 
-    def __init__(self):
+    def __init__(self, quiet=False):
         self.threads = []
         self.active = True
+        self.quiet = quiet
 
     def run(self, duration):
         """Monitors all redis servers defined in the config for a certain number
@@ -274,10 +276,10 @@ class RedisMonitor(object):
     def stop(self):
         """Stops the monitor and all associated threads.
         """
-        if args.quiet==False:
+        if not self.quiet:
             print "shutting down..."
         for t in self.threads:
-                t.stop()
+            t.stop()
         self.active = False
 
 
@@ -293,7 +295,7 @@ def main():
                         action='store_true')
     args = parser.parse_args()
     duration = args.duration
-    monitor = RedisMonitor()
+    monitor = RedisMonitor(quiet=args.quiet)
     monitor.run(duration)
 
 if __name__ == '__main__':

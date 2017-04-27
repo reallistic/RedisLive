@@ -1,18 +1,19 @@
 #! /usr/bin/env python
 
+import sys
 import tornado.ioloop
 import tornado.options
 from tornado.options import define, options
 import tornado.web
 
-from api.controller.BaseStaticFileHandler import BaseStaticFileHandler
+from redislive.api.controller.BaseStaticFileHandler import BaseStaticFileHandler
 
-from api.controller.ServerListController import ServerListController
-from api.controller.InfoController import InfoController
-from api.controller.MemoryController import MemoryController
-from api.controller.CommandsController import CommandsController
-from api.controller.TopCommandsController import TopCommandsController
-from api.controller.TopKeysController import TopKeysController
+from redislive.api.controller.ServerListController import ServerListController
+from redislive.api.controller.InfoController import InfoController
+from redislive.api.controller.MemoryController import MemoryController
+from redislive.api.controller.CommandsController import CommandsController
+from redislive.api.controller.TopCommandsController import TopCommandsController
+from redislive.api.controller.TopKeysController import TopKeysController
 
 def main():
     define("port", default=8888, help="run on the given port", type=int)

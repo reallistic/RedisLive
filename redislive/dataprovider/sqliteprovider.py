@@ -1,3 +1,4 @@
+import traceback
 from api.util import settings
 import contextlib
 import sqlite3
@@ -61,6 +62,7 @@ class RedisStatsProvider(object):
         values = (timestamp.strftime('%Y-%m-%d %H:%M:%S'), command, keyname,
                   argument, server)
 
+        print 'saving monitor command %s' % query
         self._retry_query(query, values)
 
     def get_info(self, server):
@@ -196,7 +198,9 @@ class RedisStatsProvider(object):
                     cursor.execute(query, values)
                     self.conn.commit()
                     completed = True
-                except Exception:
+                except Exception as e:
+                    print e
+                    traceback.print_exc()
                     # FIXME: Catch specific exceptions here otherwise it's likely to
                     # mask bugs/issues later.
                     pass
