@@ -11,6 +11,9 @@ import argparse
 import time
 
 
+IGNORED_COMMANDS = set(('MONITOR', 'INFO', 'AUTH'))
+
+
 class Monitor(object):
     """Monitors a given Redis server using the MONITOR command.
     """
@@ -131,7 +134,7 @@ class MonitorThread(threading.Thread):
                 else:
                     arguments = None
 
-                if not command == 'INFO' and not command == 'MONITOR':
+                if command not in IGNORED_COMMANDS:
                     stats_provider.save_monitor_command(self.id, 
                                                         timestamp, 
                                                         command, 
